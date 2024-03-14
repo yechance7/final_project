@@ -45,10 +45,10 @@ def main(stores_data, item_data):
 
 if __name__ == "__main__":
     # stores.json 파일 로드
-    with open('stores.json', 'r', encoding='utf-8') as f:
+    with open('data/stores.json', 'r', encoding='utf-8') as f:
         stores_data = json.load(f)
 
     # item.json 파일 로드
-    with open('item.json', 'r', encoding='utf-8') as f:
+    with open('data/item.json', 'r', encoding='utf-8') as f:
         item_data = json.load(f)
     main(stores_data, item_data)
