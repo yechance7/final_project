@@ -11,9 +11,12 @@ def search_stores(data, user_input):
 def search_items(data, user_input):
     matching_items = []
     for item in data:
-        if user_input in item["content"] or user_input in item["simple_contents"]:
+        content = item.get("content", "")
+        simple_contents = item.get("simple_contents", "")
+        if user_input in content or (simple_contents and user_input in simple_contents):
             matching_items.append(item["id"])
     return matching_items
+
 
 def main(stores_data, item_data):
     st.title("CTEE")
