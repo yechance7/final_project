@@ -1,10 +1,17 @@
 import streamlit as st
 import json
 
+def search_stores(data, user_input):
+    matching_items = []
+    for item in data:
+        if user_input in item["title"] or user_input in item["content"]:
+            matching_items.append(item["id"])
+    return matching_items
+
 def search_items(data, user_input):
     matching_items = []
     for item in data:
-        if user_input in item["content"] or user_input in item["title"]:
+        if user_input in item["content"]:
             matching_items.append(item["id"])
     return matching_items
 
@@ -25,14 +32,14 @@ def main(stores_data, item_data):
         if not user_input:
             st.write("검색어를 입력하세요.")
         else:
-            # 아이템 검색 및 결과 출력
-            matching_items = search_items(stores_data, user_input)
-            if matching_items:
+            # 스토어 검색 및 결과 출력
+            matching_stores = search_stores(stores_data, user_input)
+            if matching_stores:
                 st.write("스토어에서 찾은 아이템 번호:")
-                for item_id in matching_items:
-                    st.write(f"아이템 번호: {item_id}")
+                for store_id in matching_stores:
+                    st.write(f"스토어 번호: {store_id}")
             else:
-                st.write("스토어에서 검색 결과가 없습니다.")
+                st.write("스토어 검색 결과가 없습니다.")
 
             # 아이템 검색 및 결과 출력
             matching_items = search_items(item_data, user_input)
@@ -41,7 +48,8 @@ def main(stores_data, item_data):
                 for item_id in matching_items:
                     st.write(f"아이템 번호: {item_id}")
             else:
-                st.write("아이템에서 검색 결과가 없습니다.")
+                st.write("아이템 검색 결과가 없습니다.")
+
 
 if __name__ == "__main__":
     # stores.json 파일 로드
