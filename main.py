@@ -1,7 +1,7 @@
 import streamlit as st
 
 def main():
-    st.title("Goods for Rec")
+    st.title("CTEE")
     st.write("환영합니다! 찾으시는 굿즈 또는 스트리머를 입력하세요.")
 
     # 페이지 내용 추가
