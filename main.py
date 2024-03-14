@@ -11,7 +11,7 @@ def search_stores(data, user_input):
 def search_items(data, user_input):
     matching_items = []
     for item in data:
-        if user_input in item["content"]:
+        if user_input in item["content"] or user_input in item["simple_contents"]:
             matching_items.append(item["id"])
     return matching_items
 
