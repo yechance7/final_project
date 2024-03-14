@@ -6,7 +6,7 @@ def search_stores(data, user_input):
     for item in data:
         if user_input in item["title"] or user_input in item["content"]:
             matching_items.append({"id": item["id"], "title": item["title"], "content": item["content"],"view_count": item["view_count"]})
-    return sorted(matching_items, key=lambda x: x['view_count'])
+    return sorted(matching_items, key=lambda x: x['view_count'], reverse=True)
 
 def search_items(data, user_input):
     matching_items = []
@@ -15,7 +15,7 @@ def search_items(data, user_input):
         simple_contents = item.get("simple_contents", "")
         if user_input in content or (simple_contents and user_input in simple_contents):
             matching_items.append({"id": item["id"], "content": item["content"], "simple_contents": item["simple_contents"],"view_count": item["view_count"]})
-    return sorted(matching_items, key=lambda x: x['view_count'])
+    return sorted(matching_items, key=lambda x: x['view_count'], reverse=True)
 
 
 def main(stores_data, item_data):
