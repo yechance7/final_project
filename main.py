@@ -5,8 +5,8 @@ def search_stores(data, user_input):
     matching_items = []
     for item in data:
         if user_input in item["title"] or user_input in item["content"]:
-            matching_items.append({"id": item["id"], "title": item["title"], "content": item["content"]})
-    return matching_items
+            matching_items.append({"id": item["id"], "title": item["title"], "content": item["content"],"view_count": item["view_count"]})
+    return sorted(matching_items, key=lambda x: x['view_count'])
 
 def search_items(data, user_input):
     matching_items = []
@@ -15,7 +15,7 @@ def search_items(data, user_input):
         simple_contents = item.get("simple_contents", "")
         if user_input in content or (simple_contents and user_input in simple_contents):
             matching_items.append({"id": item["id"], "content": item["content"], "simple_contents": item["simple_contents"]})
-    return matching_items
+    return sorted(matching_items, key=lambda x: x['view_count'])
 
 
 def main(stores_data, item_data):
@@ -43,7 +43,7 @@ def main(stores_data, item_data):
                     st.write(f"스토어 번호: {store['id']}, 이름: {store['title']}, 컨텐츠: {store['content']}")
             else:
                 st.write("스토어 검색 결과가 없습니다.")
-            
+
             st.write("----------------------------------------------")
 
             # 아이템 검색 및 결과 출력
