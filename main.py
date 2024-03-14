@@ -1,18 +1,17 @@
 import streamlit as st
 
 def main():
-    st.title("나의 홈페이지")
-    st.write("환영합니다! 이 곳은 나의 홈페이지입니다.")
+    st.title("Goods for Rec")
+    st.write("환영합니다! 찾으시는 굿즈 또는 스트리머를 입력하세요.")
 
     # 페이지 내용 추가
-    st.header("페이지 내용")
-    st.write("이곳에 페이지 내용을 추가하세요.")
+    st.header("검색")
 
     # 사용자 입력 받기
-    user_input = st.text_input("여기에 입력하세요", "")
+    user_input = st.text_input("찾고 계신 크리에이터 또는 콘텐츠가 있나요?", "")
 
     if st.button("확인"):
-        st.write("입력한 내용:", user_input)
+        st.write("최근 검색어:", user_input)
 
 if __name__ == "__main__":
     main()
