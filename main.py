@@ -49,6 +49,6 @@ if __name__ == "__main__":
         stores_data = json.load(f)
 
     # item.json 파일 로드
-    with open('data/item.json', 'r', encoding='utf-8') as f:
+    with open('data/items.json', 'r', encoding='utf-8') as f:
         item_data = json.load(f)
     main(stores_data, item_data)
