@@ -49,7 +49,7 @@ def main(stores_data, item_data):
             if matching_items:
                 st.write(f"아이템에서 찾은 아이템 총 {len(matching_items)}:")
                 for item_id in matching_items:
-                    st.write(f"아이템 번호: {item_id}, 이름: {item_data[item_id]['simple_contents']}, 컨탠츠: {item_data[item_id]['contents']}")
+                    st.write(f"아이템 번호: {item_id}, 이름: {item_data[item_id]['simple_contents']}, 컨탠츠: {item_data[item_id]['content']}")
             else:
                 st.write("아이템 검색 결과가 없습니다.")
 
