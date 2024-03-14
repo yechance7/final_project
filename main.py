@@ -38,7 +38,7 @@ def main(stores_data, item_data):
             # 스토어 검색 및 결과 출력
             matching_stores = search_stores(stores_data, user_input)
             if matching_stores:
-                st.write("스토어에서 찾은 아이템 번호:")
+                st.write(f"스토어에서 찾은 아이템: {len(matching_stores)}")
                 for store_id in matching_stores:
                     st.write(f"스토어 번호: {store_id}")
             else:
@@ -47,7 +47,7 @@ def main(stores_data, item_data):
             # 아이템 검색 및 결과 출력
             matching_items = search_items(item_data, user_input)
             if matching_items:
-                st.write("아이템에서 찾은 아이템 번호:")
+                st.write(f"아이템에서 찾은 아이템 총 {len(matching_items)}:")
                 for item_id in matching_items:
                     st.write(f"아이템 번호: {item_id}")
             else:
