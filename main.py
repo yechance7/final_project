@@ -43,6 +43,7 @@ def main(stores_data, item_data):
                     st.write(f"스토어 번호: {store['id']}, 이름: {store['title']}, 컨텐츠: {store['content']}")
             else:
                 st.write("스토어 검색 결과가 없습니다.")
+            print()
 
             # 아이템 검색 및 결과 출력
             matching_items = search_items(item_data, user_input)
