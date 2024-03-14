@@ -5,7 +5,7 @@ def search_stores(data, user_input):
     matching_items = []
     for item in data:
         if user_input in item["title"] or user_input in item["content"]:
-            matching_items.append(item["id"])
+            matching_items.append({"id": item["id"], "title": item["title"], "content": item["content"]})
     return matching_items
 
 def search_items(data, user_input):
@@ -14,7 +14,7 @@ def search_items(data, user_input):
         content = item.get("content", "")
         simple_contents = item.get("simple_contents", "")
         if user_input in content or (simple_contents and user_input in simple_contents):
-            matching_items.append(item["id"])
+            matching_items.append({"id": item["id"], "content": item["content"], "simple_contents": item["simple_contents"]})
     return matching_items
 
 
@@ -39,8 +39,8 @@ def main(stores_data, item_data):
             matching_stores = search_stores(stores_data, user_input)
             if matching_stores:
                 st.write(f"스토어에서 찾은 아이템: {len(matching_stores)}")
-                for store_id in matching_stores:
-                    st.write(f"스토어 번호: {store_id}, 이름: {stores_data[store_id]['title']}, 컨탠츠:{stores_data[store_id]['content']}")
+                for store in matching_stores:
+                    st.write(f"스토어 번호: {store['id']}, 이름: {store['title']}, 컨텐츠: {store['content']}")
             else:
                 st.write("스토어 검색 결과가 없습니다.")
 
@@ -48,8 +48,8 @@ def main(stores_data, item_data):
             matching_items = search_items(item_data, user_input)
             if matching_items:
                 st.write(f"아이템에서 찾은 아이템 총 {len(matching_items)}:")
-                for item_id in matching_items:
-                    st.write(f"아이템 번호: {item_id}, 이름: {item_data[item_id]['simple_contents']}, 컨탠츠: {item_data[item_id]['content']}")
+                for item in matching_items:
+                    st.write(f"아이템 번호: {item['id']}, 이름: {item['simple_contents']}, 컨텐츠: {item['content']}")
             else:
                 st.write("아이템 검색 결과가 없습니다.")
 
