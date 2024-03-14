@@ -2,7 +2,7 @@ import streamlit as st
 
 def main():
     st.title("CTEE")
-    st.write("환영합니다! 찾으시는 굿즈 또는 스트리머를 입력하세요.")
+    st.write("환영합니다! 디지털 콘텐츠 판매를 쉽고 빠르게 크티 플레이스")
 
     # 페이지 내용 추가
     st.header("검색")
