@@ -21,6 +21,8 @@ def search_items(data, user_input):
     return sorted(matching_items, key=lambda x: x['view_count'], reverse=True)
 
 def crawl_website(url):   
+    # Chrome 드라이버 초기화
+    driver = webdriver.Chrome(executable_path='chromedriver.exe') 
     
     # 웹페이지 로드
     driver.get(url)
@@ -88,7 +90,6 @@ if __name__ == "__main__":
     with open('data/items.json', 'r', encoding='utf-8') as f:
         item_data = json.load(f)
 
-    # Chrome 드라이버 초기화
-    driver = webdriver.Chrome(executable_path='chromedriver.exe') 
+    
 
     main(stores_data, item_data)
