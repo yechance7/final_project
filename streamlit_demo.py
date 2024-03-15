@@ -12,7 +12,7 @@ def crawl_website(url):
 
     # Chrome 드라이버 초기화
     #driver = webdriver.Chrome(service=service)
-    with webdriver.Chrome(service=service, options=options) as driver:
+    with webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options) as driver:
         # 웹페이지 로드
         driver.get(url)
 
