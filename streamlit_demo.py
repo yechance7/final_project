@@ -1,11 +1,15 @@
 import streamlit as st
 import json
+import requests
+from bs4 import BeautifulSoup
+import os
+
 
 def search_stores(data, user_input):
     matching_items = []
     for item in data:
         if user_input in item["title"] or user_input in item["content"]:
-            matching_items.append({"id": item["id"], "title": item["title"], "content": item["content"],"view_count": item["view_count"]})
+            matching_items.append({"id": item["id"], "title": item["title"], "content": item["content"],"view_count": item["view_count"]},"alias": item["alias"])
     return sorted(matching_items, key=lambda x: x['view_count'], reverse=True)
 
 def search_items(data, user_input):
@@ -16,6 +20,24 @@ def search_items(data, user_input):
         if user_input in content or (simple_contents and user_input in simple_contents):
             matching_items.append({"id": item["id"], "content": item["content"], "simple_contents": item["simple_contents"],"view_count": item["view_count"]})
     return sorted(matching_items, key=lambda x: x['view_count'], reverse=True)
+
+def crawl_website(url):
+    # URL에서 HTML을 가져옵니다.
+    response = requests.get(url)
+    soup = BeautifulSoup(response.text, 'html.parser')
+    
+    # 첫 번째 이미지 태그를 찾습니다.
+    img_tag = soup.find('img')
+    
+    # 이미지가 없는 경우 예외 처리합니다.
+    if img_tag is None:
+        st.error("이미지를 찾을 수 없습니다.")
+        return
+    
+    # 이미지를 표시합니다.
+    return img_tag['src']
+
+
 
 
 def main(stores_data, item_data):
@@ -40,7 +62,9 @@ def main(stores_data, item_data):
             if matching_stores:
                 st.write(f"스토어에서 찾은 아이템: {len(matching_stores)}")
                 for store in matching_stores:
-                    st.write(f"스토어 id: {store['id']}, title: {store['title']}, content: {store['content']}")
+                    url = f"https://ctee.kr/place/{store['alias']}"
+                    #st.write(f"스토어 id: {store['id']}, title: {store['title']}, content: {store['content']}")
+                    st.image(crawl_website(url), caption=f"스토어 id: {store['id']}, title: {store['title']}, content: {store['content']}", use_column_width=True)
             else:
                 st.write("스토어 검색 결과가 없습니다.")
 
