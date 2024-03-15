@@ -4,7 +4,6 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 
 
-
 def search_stores(data, user_input):
     matching_items = []
     for item in data:
