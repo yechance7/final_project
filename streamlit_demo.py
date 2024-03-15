@@ -22,7 +22,7 @@ def search_items(data, user_input):
 
 def crawl_website(url):   
     # Chrome 드라이버 초기화
-    driver = webdriver.Chrome(executable_path='data/chromedriver.exe') 
+    driver = webdriver.Chrome(executable_path='data/chromedriver') 
 
     # 웹페이지 로드
     driver.get(url)
