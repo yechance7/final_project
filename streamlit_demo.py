@@ -1,6 +1,7 @@
 import streamlit as st
 import json
 from selenium import webdriver
+from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
 
 
@@ -21,8 +22,11 @@ def search_items(data, user_input):
     return sorted(matching_items, key=lambda x: x['view_count'], reverse=True)
 
 def crawl_website(url):   
+    # Chrome 드라이버 서비스 생성
+    service = Service('chromedriver.exe')
+
     # Chrome 드라이버 초기화
-    driver = webdriver.Chrome(executable_path='data/chromedriver') 
+    driver = webdriver.Chrome(service=service)
 
     # 웹페이지 로드
     driver.get(url)
@@ -37,7 +41,6 @@ def crawl_website(url):
     driver.quit()
 
     return img_src
-
 
 
 
