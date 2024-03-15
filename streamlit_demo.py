@@ -90,8 +90,8 @@ if __name__ == "__main__":
     with open('data/items.json', 'r', encoding='utf-8') as f:
         item_data = json.load(f)
 
-    service = Service(executable_path='./chromedriver.exe') 
+    service = Service(executable_path='chromedriver.exe') 
     options= webdriver.ChromeOptions()
-    driver= webdriver.Chrome(service=service)
+    driver= webdriver.Chrome(service=service,options=options)
 
     main(stores_data, item_data)
