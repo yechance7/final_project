@@ -22,8 +22,8 @@ def search_items(data, user_input):
 
 def crawl_website(url):   
     # Chrome 드라이버 초기화
-    driver = webdriver.Chrome(executable_path='chromedriver.exe') 
-    
+    driver = webdriver.Chrome(executable_path='data/chromedriver.exe') 
+
     # 웹페이지 로드
     driver.get(url)
 
@@ -89,7 +89,6 @@ if __name__ == "__main__":
     # item.json 파일 로드
     with open('data/items.json', 'r', encoding='utf-8') as f:
         item_data = json.load(f)
-
     
 
     main(stores_data, item_data)
