@@ -1,8 +1,31 @@
-import streamlit as st
 import json
+import streamlit as st
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
+from webdriver_manager.chrome import ChromeDriverManager
+
+def crawl_website(url):   
+    # Chrome 드라이버 서비스 생성
+    service = Service('chromedriver.exe')
+    options= webdriver.ChromeOptions()
+
+    # Chrome 드라이버 초기화
+    #driver = webdriver.Chrome(service=service)
+    with webdriver.Chrome(service=service, options=options) as driver:
+        # 웹페이지 로드
+        driver.get(url)
+
+        # 이미지 태그 찾기
+        img_element = driver.find_element(By.TAG_NAME, 'img')
+
+        # 이미지 URL 가져오기
+        img_src = img_element.get_attribute('src')
+
+    # 브라우저 닫기
+    driver.quit()
+
+    return img_src
 
 
 def search_stores(data, user_input):
@@ -20,27 +43,6 @@ def search_items(data, user_input):
         if user_input in content or (simple_contents and user_input in simple_contents):
             matching_items.append({"id": item["id"], "content": item["content"], "simple_contents": item["simple_contents"],"view_count": item["view_count"]})
     return sorted(matching_items, key=lambda x: x['view_count'], reverse=True)
-
-def crawl_website(url):   
-    # Chrome 드라이버 서비스 생성
-    service = Service('chromedriver.exe')
-
-    # Chrome 드라이버 초기화
-    driver = webdriver.Chrome(service=service)
-
-    # 웹페이지 로드
-    driver.get(url)
-
-    # 이미지 태그 찾기
-    img_element = driver.find_element(By.TAG_NAME, 'img')
-
-    # 이미지 URL 가져오기
-    img_src = img_element.get_attribute('src')
-
-    # 브라우저 닫기
-    driver.quit()
-
-    return img_src
 
 
 
