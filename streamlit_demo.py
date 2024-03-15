@@ -7,7 +7,7 @@ from webdriver_manager.chrome import ChromeDriverManager
 
 def crawl_website(url):   
     # Chrome 드라이버 서비스 생성
-    service = Service('chromedriver.exe')
+    #service = Service('chromedriver.exe')
     options= webdriver.ChromeOptions()
 
     # Chrome 드라이버 초기화
@@ -23,7 +23,7 @@ def crawl_website(url):
         img_src = img_element.get_attribute('src')
 
     # 브라우저 닫기
-    driver.quit()
+    #driver.quit()
 
     return img_src
 
