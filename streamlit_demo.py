@@ -8,6 +8,7 @@ from webdriver_manager.chrome import ChromeDriverManager
 def crawl_website(url):   
     # Chrome 드라이버 서비스 생성
     #service = Service('chromedriver.exe')
+    service=Service(ChromeDriverManager().install())
     options= webdriver.ChromeOptions()
 
     # Chrome 드라이버 초기화
@@ -91,6 +92,6 @@ if __name__ == "__main__":
     # item.json 파일 로드
     with open('data/items.json', 'r', encoding='utf-8') as f:
         item_data = json.load(f)
-    service=Service(ChromeDriverManager().install())
+    
 
     main(stores_data, item_data)
