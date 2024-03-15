@@ -12,7 +12,7 @@ def crawl_website(url):
 
     # Chrome 드라이버 초기화
     #driver = webdriver.Chrome(service=service)
-    with webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options) as driver:
+    with webdriver.Chrome(service=service, options=options) as driver:
         # 웹페이지 로드
         driver.get(url)
 
@@ -21,9 +21,6 @@ def crawl_website(url):
 
         # 이미지 URL 가져오기
         img_src = img_element.get_attribute('src')
-
-    # 브라우저 닫기
-    #driver.quit()
 
     return img_src
 
@@ -94,6 +91,6 @@ if __name__ == "__main__":
     # item.json 파일 로드
     with open('data/items.json', 'r', encoding='utf-8') as f:
         item_data = json.load(f)
-    
+    service=Service(ChromeDriverManager().install())
 
     main(stores_data, item_data)
