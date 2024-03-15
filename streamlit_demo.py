@@ -2,7 +2,7 @@ import streamlit as st
 import json
 from selenium import webdriver
 from selenium.webdriver.common.by import By
-
+import os
 
 def search_stores(data, user_input):
     matching_items = []
@@ -21,10 +21,14 @@ def search_items(data, user_input):
     return sorted(matching_items, key=lambda x: x['view_count'], reverse=True)
 
 def crawl_website(url):
+    # 현재 스크립트의 디렉토리를 가져옵니다.
+    current_directory = os.path.dirname(os.path.realpath(__file__))
+
+    # Chrome 드라이버 파일의 경로를 지정합니다.
+    chrome_driver_path = os.path.join(current_directory, 'chromedriver')
+
     # Selenium 드라이버 초기화
-    driver = webdriver.Chrome()  # Chrome 브라우저를 사용할 경우
-    # Firefox를 사용하려면 다음을 사용합니다.
-    # driver = webdriver.Firefox()
+    driver = webdriver.Chrome(executable_path=chrome_driver_path)
 
     # 웹페이지 로드
     driver.get(url)
