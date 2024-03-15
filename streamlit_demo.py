@@ -1,8 +1,7 @@
 import streamlit as st
 import json
-import requests
-from bs4 import BeautifulSoup
-import os
+from selenium import webdriver
+from selenium.webdriver.common.by import By
 
 
 def search_stores(data, user_input):
@@ -22,20 +21,24 @@ def search_items(data, user_input):
     return sorted(matching_items, key=lambda x: x['view_count'], reverse=True)
 
 def crawl_website(url):
-    # URL에서 HTML을 가져옵니다.
-    response = requests.get(url)
-    soup = BeautifulSoup(response.text, 'html.parser')
-    
-    # 첫 번째 이미지 태그를 찾습니다.
-    img_tag = soup.find('img')
-    
-    # 이미지가 없는 경우 예외 처리합니다.
-    if img_tag is None:
-        st.error("이미지를 찾을 수 없습니다.")
-        return
-    
-    # 이미지를 표시합니다.
-    return img_tag['src']
+    # Selenium 드라이버 초기화
+    driver = webdriver.Chrome()  # Chrome 브라우저를 사용할 경우
+    # Firefox를 사용하려면 다음을 사용합니다.
+    # driver = webdriver.Firefox()
+
+    # 웹페이지 로드
+    driver.get(url)
+
+    # 이미지 태그 찾기
+    img_element = driver.find_element(By.TAG_NAME, 'img')
+
+    # 이미지 URL 가져오기
+    img_src = img_element.get_attribute('src')
+
+    # 브라우저 닫기
+    driver.quit()
+
+    return img_src
 
 
 
