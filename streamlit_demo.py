@@ -35,7 +35,7 @@ def crawl_image_store(url):
     
     # Chrome 드라이버 서비스 생성
     #service = Service('chromedriver.exe')
-    service=Service(ChromeDriverManager(driver_version="122.0.6261.128").install())
+    service=Service(ChromeDriverManager().install())
 
     # Chrome 드라이버 초기화
     driver = webdriver.Chrome(service=service)
