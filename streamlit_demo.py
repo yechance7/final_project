@@ -29,7 +29,7 @@ def crawl_website(url):
 
     return img_src
 
-def crawl_image(url):
+def crawl_image_store(url):
     # 웹 페이지에 GET 요청 보내기
     response = requests.get(url)
 
@@ -38,7 +38,29 @@ def crawl_image(url):
         soup = BeautifulSoup(response.content, 'html.parser')
 
         # 이미지 태그 모두 찾기
-        img_tags = soup.find_all('img')
+        # 클래스가 "Profile"인 이미지 태그 찾기
+        img_tags = soup.find_all('img', class_='Profile')
+
+        # 이미지 태그에서 첫 번째 이미지 URL 가져오기
+        for img_tag in img_tags:
+            img_url = img_tag.get('src')
+            if img_url:
+                # 상대 URL을 절대 URL로 변환
+                img_url = urljoin(url, img_url)
+                return img_url
+
+    return None
+
+def crawl_image_item(url):
+    # 웹 페이지에 GET 요청 보내기
+    response = requests.get(url)
+
+    # 요청이 성공한 경우 HTML 파싱
+    if response.status_code == 200:
+        soup = BeautifulSoup(response.content, 'html.parser')
+
+        # 이미지 태그 모두 찾기
+        img_tags = soup.find_all('img', class_='item_img')
 
         # 이미지 태그에서 첫 번째 이미지 URL 가져오기
         for img_tag in img_tags:
@@ -94,7 +116,7 @@ def main(stores_data, item_data):
                 for store in matching_stores:
                     url = f"https://ctee.kr/place/{store['alias']}"
                     #st.write(f"스토어 id: {store['id']}, title: {store['title']}, content: {store['content']}")
-                    st.image(crawl_image(url), caption=f"스토어 id: {store['id']}, title: {store['title']}, content: {store['content']}", use_column_width=True)
+                    st.image(crawl_image_store(url), caption=f"스토어 id: {store['id']}, title: {store['title']}, content: {store['content']}", use_column_width=True)
             else:
                 st.write("스토어 검색 결과가 없습니다.")
 
@@ -107,7 +129,7 @@ def main(stores_data, item_data):
                 for item in matching_items:
                     url = f"https://ctee.kr/item/store/{item['id']}"
                     #st.write(f"아이템 id: {item['id']}, simple_contents: {item['simple_contents']}, content: {item['content']}")
-                    st.image(crawl_image(url), caption=f"아이템 id: {item['id']}, simple_contents: {item['simple_contents']}, content: {item['content']}", use_column_width=True)
+                    st.image(crawl_image_item(url), caption=f"아이템 id: {item['id']}, simple_contents: {item['simple_contents']}, content: {item['content']}", use_column_width=True)
             else:
                 st.write("아이템 검색 결과가 없습니다.")
 
