@@ -29,9 +29,7 @@ def crawl_website(url):
 
     return img_src
 
-def crawl_images(url):
-    image_urls = []
-
+def crawl_image(url):
     # 웹 페이지에 GET 요청 보내기
     response = requests.get(url)
 
@@ -39,19 +37,18 @@ def crawl_images(url):
     if response.status_code == 200:
         soup = BeautifulSoup(response.content, 'html.parser')
 
-        # 이미지 태그 찾기
-        img_tags = soup.find('img')
+        # 이미지 태그 모두 찾기
+        img_tags = soup.find_all('img')
 
-        # 이미지 태그에서 이미지 URL 가져오기
+        # 이미지 태그에서 첫 번째 이미지 URL 가져오기
         for img_tag in img_tags:
-            # 이미지 URL 가져오기
             img_url = img_tag.get('src')
             if img_url:
                 # 상대 URL을 절대 URL로 변환
                 img_url = urljoin(url, img_url)
-                image_urls.append(img_url)
+                return img_url
 
-    return image_urls
+    return None
 
 
 
