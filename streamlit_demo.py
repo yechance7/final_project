@@ -37,17 +37,21 @@ def crawl_image_store(url):
     if response.status_code == 200:
         soup = BeautifulSoup(response.content, 'html.parser')
 
-        # 이미지 태그 모두 찾기
-        # 클래스가 "Profile"인 이미지 태그 찾기
-        img_tags = soup.find_all('img', class_='Profile')
+        # 클래스가 "Profile"인 div 요소 찾기
+        profile_div = soup.find('div', class_='Profile')
 
-        # 이미지 태그에서 첫 번째 이미지 URL 가져오기
-        for img_tag in img_tags:
+        # 이미지 태그 찾기
+        img_tag = profile_div.find('img')
+
+        # 이미지 URL 가져오기
+        if img_tag:
+            # 이미지 URL 가져오기
             img_url = img_tag.get('src')
-            if img_url:
-                # 상대 URL을 절대 URL로 변환
-                img_url = urljoin(url, img_url)
-                return img_url
+
+            # 상대 URL을 절대 URL로 변환
+            img_url = urljoin(url, img_url)
+
+            return img_url
 
     return None
 
