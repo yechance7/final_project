@@ -4,5 +4,4 @@ selenium
 webdriver_manager
 requests
 bs4 
-BeautifulSoup
 urllib.parse
