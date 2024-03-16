@@ -30,34 +30,30 @@ def crawl_website(url):
     return img_src
 
 def crawl_image_store(url):
-    try:
-        # 웹 페이지에 GET 요청 보내기
-        response = requests.get(url)
+    # 웹 페이지에 GET 요청 보내기
+    response = requests.get(url)
 
-        # 요청이 성공한 경우 HTML 파싱
-        if response.status_code == 200:
-            soup = BeautifulSoup(response.content, 'html.parser')
+    # 요청이 성공한 경우 HTML 파싱
+    if response.status_code == 200:
+        soup = BeautifulSoup(response.content, 'html.parser')
 
-            # 클래스가 "place_profile"인 버튼 요소 찾기
-            button_tag = soup.find('button', class_='place_profile')
+        # 클래스가 "place_profile"인 버튼 요소 찾기
+        button_tag = soup.find('button', class_='place_profile')
 
-            # 버튼 요소가 존재하는지 확인
-            if button_tag:
-                # 버튼 요소 내부의 이미지 태그 찾기
-                img_tag = button_tag.find('img', class_='profile_img')
+        # 버튼 요소가 존재하는지 확인
+        if button_tag:
+            # 버튼 요소 내부의 이미지 태그 찾기
+            img_tag = button_tag.find('img', class_='profile_img')
 
-                # 이미지 태그가 존재하는지 확인
-                if img_tag:
-                    # 이미지 URL 가져오기
-                    img_url = img_tag.get('src')
+            # 이미지 태그가 존재하는지 확인
+            if img_tag:
+                # 이미지 URL 가져오기
+                img_url = img_tag.get('src')
 
-                    # 상대 URL을 절대 URL로 변환
-                    img_url = urljoin(url, img_url)
+                # 상대 URL을 절대 URL로 변환
+                img_url = urljoin(url, img_url)
 
-                    return img_url
-
-    except Exception as e:
-        print(f"An error occurred: {e}")
+                return img_url
 
     return None
 
@@ -119,6 +115,16 @@ def main(stores_data, item_data):
         if not user_input:
             st.write("검색어를 입력하세요.")
         else:
+             # 아이템 검색 및 결과 출력
+            matching_items = search_items(item_data, user_input)
+            if matching_items:
+                st.write(f"아이템에서 찾은 아이템 총 {len(matching_items)}:")
+                for item in matching_items:
+                    url = f"https://ctee.kr/item/store/{item['id']}"
+                    #st.write(f"아이템 id: {item['id']}, simple_contents: {item['simple_contents']}, content: {item['content']}")
+                    st.image(crawl_image_item(url), caption=f"아이템 id: {item['id']}, simple_contents: {item['simple_contents']}, content: {item['content']}", use_column_width=True)
+            else:
+                st.write("아이템 검색 결과가 없습니다.")
             # 스토어 검색 및 결과 출력
             matching_stores = search_stores(stores_data, user_input)
             if matching_stores:
