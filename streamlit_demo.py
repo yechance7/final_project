@@ -94,17 +94,7 @@ def main(stores_data, item_data):
         # 사용자 입력이 없는 경우 처리
         if not user_input:
             st.write("검색어를 입력하세요.")
-        else:
-             # 아이템 검색 및 결과 출력
-            matching_items = search_items(item_data, user_input)
-            if matching_items:
-                st.write(f"아이템에서 찾은 아이템 총 {len(matching_items)}:")
-                for item in matching_items:
-                    url = f"https://ctee.kr/item/store/{item['id']}"
-                    #st.write(f"아이템 id: {item['id']}, simple_contents: {item['simple_contents']}, content: {item['content']}")
-                    st.image(crawl_image_item(url), caption=f"아이템 id: {item['id']}, simple_contents: {item['simple_contents']}, content: {item['content']}", use_column_width=True)
-            else:
-                st.write("아이템 검색 결과가 없습니다.")
+        else: 
             # 스토어 검색 및 결과 출력
             matching_stores = search_stores(stores_data, user_input)
             if matching_stores:
