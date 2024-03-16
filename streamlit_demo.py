@@ -94,7 +94,7 @@ def main(stores_data, item_data):
                 for store in matching_stores:
                     url = f"https://ctee.kr/place/{store['alias']}"
                     #st.write(f"스토어 id: {store['id']}, title: {store['title']}, content: {store['content']}")
-                    st.image(crawl_images(url), caption=f"스토어 id: {store['id']}, title: {store['title']}, content: {store['content']}", use_column_width=True)
+                    st.image(crawl_image(url), caption=f"스토어 id: {store['id']}, title: {store['title']}, content: {store['content']}", use_column_width=True)
             else:
                 st.write("스토어 검색 결과가 없습니다.")
 
