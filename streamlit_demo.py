@@ -7,8 +7,8 @@ from webdriver_manager.chrome import ChromeDriverManager
 
 def crawl_website(url):   
     # Chrome 드라이버 서비스 생성
-    service = Service('chromedriver.exe')
-    #service=Service(ChromeDriverManager().install())
+    #service = Service('chromedriver.exe')
+    service=Service(ChromeDriverManager().install())
     options= webdriver.ChromeOptions()
 
     # Chrome 드라이버 초기화
