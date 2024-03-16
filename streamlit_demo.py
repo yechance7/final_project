@@ -38,7 +38,7 @@ def crawl_image_store(url):
         soup = BeautifulSoup(response.content, 'html.parser')
 
         # 클래스가 "Profile"인 div 요소 찾기
-        profile_div = soup.find('div', class_='profile_img_wrapper false')
+        profile_div = soup.find('div', class_='profile_img')
 
         # 이미지 태그 찾기
         img_tag = profile_div.find('img')
