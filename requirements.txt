@@ -4,4 +4,3 @@ selenium
 webdriver_manager
 requests
 bs4 
-urllib.parse
