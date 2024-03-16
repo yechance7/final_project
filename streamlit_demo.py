@@ -37,18 +37,23 @@ def crawl_image_store(url):
     if response.status_code == 200:
         soup = BeautifulSoup(response.content, 'html.parser')
 
-        # 클래스가 "profile_img"인 이미지 태그 찾기
-        img_tag = soup.find('img', class_='profile_img')
+        # 클래스가 "place_profile"인 버튼 요소 찾기
+        button_tag = soup.find('button', class_='place_profile')
 
-        # 이미지 URL 가져오기
-        if img_tag:
-            # 이미지 URL 가져오기
-            img_url = img_tag.get('src')
+        # 버튼 요소가 존재하는지 확인
+        if button_tag:
+            # 버튼 요소 내부의 이미지 태그 찾기
+            img_tag = button_tag.find('img', class_='profile_img')
 
-            # 상대 URL을 절대 URL로 변환
-            img_url = urljoin(url, img_url)
+            # 이미지 태그가 존재하는지 확인
+            if img_tag:
+                # 이미지 URL 가져오기
+                img_url = img_tag.get('src')
 
-            return img_url
+                # 상대 URL을 절대 URL로 변환
+                img_url = urljoin(url, img_url)
+
+                return img_url
 
     return None
 
