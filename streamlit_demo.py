@@ -4,6 +4,8 @@ from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
 from webdriver_manager.chrome import ChromeDriverManager
+from PIL import Image
+from io import BytesIO
 
 import requests
 from bs4 import BeautifulSoup
@@ -30,33 +32,56 @@ def crawl_website(url):
     return img_src
 
 def crawl_image_store(url):
-    response = requests.get(url)
-    if response.status_code == 200:
-        soup = BeautifulSoup(response.content, 'html.parser')
-        img_tags = soup.find_all('img', class_='profile_img')
-        image_urls = [img.get('src') for img in img_tags]
-    return image_urls
+    
+    # Chrome 드라이버 서비스 생성
+    service = Service('chromedriver.exe')
+
+    # Chrome 드라이버 초기화
+    driver = webdriver.Chrome(service=service)
+
+    # 웹페이지 로드
+    driver.get(url)
+
+    # 이미지 태그 찾기
+    img_element = driver.find_element(By.CLASS_NAME, 'profile_img')
+
+    # 이미지 데이터 가져오기
+    img_data = img_element.screenshot_as_png
+
+    # 이미지 데이터를 PIL Image로 변환
+    image = Image.open(BytesIO(img_data))
+
+    # 브라우저 닫기
+    driver.quit()
+
+    return image
+
 
 def crawl_image_item(url):
-    # 웹 페이지에 GET 요청 보내기
-    response = requests.get(url)
+    
+    # Chrome 드라이버 서비스 생성
+    service = Service('chromedriver.exe')
 
-    # 요청이 성공한 경우 HTML 파싱
-    if response.status_code == 200:
-        soup = BeautifulSoup(response.content, 'html.parser')
+    # Chrome 드라이버 초기화
+    driver = webdriver.Chrome(service=service)
 
-        # 이미지 태그 모두 찾기
-        img_tags = soup.find_all('img', class_='item_img')
+    # 웹페이지 로드
+    driver.get(url)
 
-        # 이미지 태그에서 첫 번째 이미지 URL 가져오기
-        for img_tag in img_tags:
-            img_url = img_tag.get('src')
-            if img_url:
-                # 상대 URL을 절대 URL로 변환
-                img_url = urljoin(url, img_url)
-                return img_url
+    # 이미지 태그 찾기
+    img_element = driver.find_element(By.CLASS_NAME, 'item_img')
 
-    return None
+    # 이미지 데이터 가져오기
+    img_data = img_element.screenshot_as_png
+
+    # 이미지 데이터를 PIL Image로 변환
+    image = Image.open(BytesIO(img_data))
+
+    # 브라우저 닫기
+    driver.quit()
+
+    return image
+
 
 
 
