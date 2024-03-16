@@ -2,5 +2,4 @@ pandas
 streamlit
 selenium
 webdriver_manager
-requests
 bs4 
