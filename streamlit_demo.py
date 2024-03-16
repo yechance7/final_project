@@ -105,7 +105,7 @@ def main(stores_data, item_data):
             if matching_items:
                 st.write(f"아이템에서 찾은 아이템 총 {len(matching_items)}:")
                 for item in matching_items:
-                    url = f"https://ctee.kr/item/place/{item['id']}"
+                    url = f"https://ctee.kr/item/store/{item['id']}"
                     #st.write(f"아이템 id: {item['id']}, simple_contents: {item['simple_contents']}, content: {item['content']}")
                     st.image(crawl_image(url), caption=f"아이템 id: {item['id']}, simple_contents: {item['simple_contents']}, content: {item['content']}", use_column_width=True)
             else:
