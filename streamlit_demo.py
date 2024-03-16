@@ -30,30 +30,34 @@ def crawl_website(url):
     return img_src
 
 def crawl_image_store(url):
-    # 웹 페이지에 GET 요청 보내기
-    response = requests.get(url)
+    try:
+        # 웹 페이지에 GET 요청 보내기
+        response = requests.get(url)
 
-    # 요청이 성공한 경우 HTML 파싱
-    if response.status_code == 200:
-        soup = BeautifulSoup(response.content, 'html.parser')
+        # 요청이 성공한 경우 HTML 파싱
+        if response.status_code == 200:
+            soup = BeautifulSoup(response.content, 'html.parser')
 
-        # 클래스가 "place_profile"인 버튼 요소 찾기
-        button_tag = soup.find('button', class_='place_profile')
+            # 클래스가 "place_profile"인 버튼 요소 찾기
+            button_tag = soup.find('button', class_='place_profile')
 
-        # 버튼 요소가 존재하는지 확인
-        if button_tag:
-            # 버튼 요소 내부의 이미지 태그 찾기
-            img_tag = button_tag.find('img', class_='profile_img')
+            # 버튼 요소가 존재하는지 확인
+            if button_tag:
+                # 버튼 요소 내부의 이미지 태그 찾기
+                img_tag = button_tag.find('img', class_='profile_img')
 
-            # 이미지 태그가 존재하는지 확인
-            if img_tag:
-                # 이미지 URL 가져오기
-                img_url = img_tag.get('src')
+                # 이미지 태그가 존재하는지 확인
+                if img_tag:
+                    # 이미지 URL 가져오기
+                    img_url = img_tag.get('src')
 
-                # 상대 URL을 절대 URL로 변환
-                img_url = urljoin(url, img_url)
+                    # 상대 URL을 절대 URL로 변환
+                    img_url = urljoin(url, img_url)
 
-                return img_url
+                    return img_url
+
+    except Exception as e:
+        print(f"An error occurred: {e}")
 
     return None
 
