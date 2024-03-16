@@ -5,6 +5,10 @@ from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
 from webdriver_manager.chrome import ChromeDriverManager
 
+import requests
+from bs4 import BeautifulSoup
+from urllib.parse import urljoin
+
 def crawl_website(url):   
     # Chrome 드라이버 서비스 생성
     #service = Service('chromedriver.exe')
@@ -24,6 +28,31 @@ def crawl_website(url):
         img_src = img_element.get_attribute('src')
 
     return img_src
+
+def crawl_images(url):
+    image_urls = []
+
+    # 웹 페이지에 GET 요청 보내기
+    response = requests.get(url)
+
+    # 요청이 성공한 경우 HTML 파싱
+    if response.status_code == 200:
+        soup = BeautifulSoup(response.content, 'html.parser')
+
+        # 이미지 태그 찾기
+        img_tags = soup.find('img')
+
+        # 이미지 태그에서 이미지 URL 가져오기
+        for img_tag in img_tags:
+            # 이미지 URL 가져오기
+            img_url = img_tag.get('src')
+            if img_url:
+                # 상대 URL을 절대 URL로 변환
+                img_url = urljoin(url, img_url)
+                image_urls.append(img_url)
+
+    return image_urls
+
 
 
 def search_stores(data, user_input):
@@ -68,7 +97,7 @@ def main(stores_data, item_data):
                 for store in matching_stores:
                     url = f"https://ctee.kr/place/{store['alias']}"
                     #st.write(f"스토어 id: {store['id']}, title: {store['title']}, content: {store['content']}")
-                    st.image(crawl_website(url), caption=f"스토어 id: {store['id']}, title: {store['title']}, content: {store['content']}", use_column_width=True)
+                    st.image(crawl_images(url), caption=f"스토어 id: {store['id']}, title: {store['title']}, content: {store['content']}", use_column_width=True)
             else:
                 st.write("스토어 검색 결과가 없습니다.")
 
