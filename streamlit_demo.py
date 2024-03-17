@@ -65,7 +65,7 @@ def crawl_image_store(url):
     image = Image.open(BytesIO(img_data))
 
     # 브라우저 닫기
-    driver.quit()
+    #driver.quit()
 
     return image
 
