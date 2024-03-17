@@ -1,9 +1,11 @@
 import json
 import streamlit as st
+
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
 from webdriver_manager.chrome import ChromeDriverManager
+
 from PIL import Image
 from io import BytesIO
 
@@ -35,12 +37,11 @@ def crawl_image_store(url):
     
     # Chrome 드라이버 서비스 생성
     #service = Service('chromedriver.exe')
-    #service=Service(ChromeDriverManager(driver_version="122.0.6261.128").install())
+    service=Service(ChromeDriverManager(driver_version="122.0.6261.128").install())
 
     # Chrome 드라이버 초기화
-    #driver = webdriver.Chrome()
-    driver = webdriver.Firefox()
-
+    driver = webdriver.Chrome(service=service)
+    
     # 웹페이지 로드
     driver.get(url)
 
