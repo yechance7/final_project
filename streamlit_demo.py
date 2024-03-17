@@ -6,6 +6,7 @@ from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
 from webdriver_manager.chrome import ChromeDriverManager
 import shutil
+from selenium.webdriver.chrome.options import Options
 
 from PIL import Image
 from io import BytesIO
@@ -44,23 +45,31 @@ def get_webdriver_service() -> Service:
     return service
 
 def crawl_image_store(url):
-    # 웹페이지 요청
-    response = requests.get(url)
     
-    # BeautifulSoup을 사용하여 HTML 파싱
-    soup = BeautifulSoup(response.text, 'html.parser')
+    # Chrome 드라이버 서비스 생성
+    #service = Service('chromedriver.exe')
+    #service=Service(ChromeDriverManager(driver_version="122.0.6261.128").install())
+
+    chrome_options = Options()
+    chrome_options.add_argument("--headless")
+
+    # Chrome 드라이버 초기화
+    driver = webdriver.Chrome(options=chrome_options)
     
+    # 웹페이지 로드
+    driver.get(url)
+
     # 이미지 태그 찾기
-    img_element = soup.find('img', class_='profile_img')  # 예시 클래스 이름, 실제로 사용하는 클래스명으로 수정해야 합니다.
-    
-    # 이미지 URL 가져오기
-    img_url = img_element['src']
-    
-    # 이미지 다운로드
-    img_response = requests.get(img_url)
-    
-    # 이미지를 PIL Image로 변환
-    image = Image.open(BytesIO(img_response.content))
+    img_element = driver.find_element(By.CLASS_NAME, 'profile_img')
+
+    # 이미지 데이터 가져오기
+    img_data = img_element.screenshot_as_png
+
+    # 이미지 데이터를 PIL Image로 변환
+    image = Image.open(BytesIO(img_data))
+
+    # 브라우저 닫기
+    driver.quit()
 
     return image
 
