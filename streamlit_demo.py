@@ -119,7 +119,7 @@ def main(stores_data, item_data):
             if matching_stores:
                 st.write(f"스토어에서 찾은 아이템: {len(matching_stores)}")
                 for store in matching_stores:
-                    st.write(f"스토어 id: {store['id']}, title: {store['title']}, content: {store['content'],"alias": item['alias']}")
+                    st.write(f"스토어 id: {store['id']}, title: {store['title']}, content: {store['content']}, alias: {item['alias']}")
                     url = f"https://ctee.kr/place/{store['alias']}"
                 
                     st.image(crawl_image_store(url), caption=f"스토어 id: {store['id']}, title: {store['title']}, content: {store['content']}", use_column_width=True)
