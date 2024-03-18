@@ -122,6 +122,7 @@ def main(stores_data, item_data):
                 for store in matching_stores:
                     st.write(f"스토어 id: {store['id']}, title: {store['title']}, content: {store['content']}, alias: {store['alias']}")
                     url = f"https://ctee.kr/place/{store['alias']}"
+                    url = "https://ctee.kr/place/Kimsagua"
                 
                     st.image(crawl_image_store(url), caption=f"스토어 id: {store['id']}, title: {store['title']}, content: {store['content']}", use_column_width=True)
             else:
