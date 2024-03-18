@@ -2,9 +2,9 @@ import json
 import streamlit as st
 
 from selenium import webdriver
-from selenium.webdriver.chrome.service import Service
+#from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
-from webdriver_manager.chrome import ChromeDriverManager
+#from webdriver_manager.chrome import ChromeDriverManager
 import shutil
 from selenium.webdriver.chrome.options import Options
 
@@ -32,10 +32,11 @@ def crawl_image_store(url):
     #driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=chrome_options)
     #driver = webdriver.Chrome(service=Service(ChromeDriverManager(version="114.0.5735.90").install()),options=options)
     
-    options = Options()
-    options.headless = True
-    options.add_experimental_option("detach", True)
-    driver = webdriver.Chrome(options=options,service=Service(ChromeDriverManager().install()))
+    options = Options() 
+    options.add_argument("--headless=new")
+    options.add_argument('--disable-gpu')
+
+    driver = webdriver.Chrome(options=options)
 
     # 웹페이지 로드
     driver.get(url)
