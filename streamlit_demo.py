@@ -46,15 +46,16 @@ def crawl_image_store(url):
     img_element = driver.find_element(By.CLASS_NAME, 'profile_img')
 
     # 이미지 데이터 가져오기
-    img_data = img_element.screenshot_as_png
+    img_url = img_element.get_attribute('src')
 
-    # 이미지 데이터를 PIL Image로 변환
-    image = Image.open(BytesIO(img_data))
+    # 이미지 다운로드 및 출력
+    response = requests.get(img_url)
+    img = Image.open(BytesIO(response.content))
 
     # 브라우저 닫기
     driver.quit()
 
-    return image
+    return img
 
 
 def crawl_image_item(url):
