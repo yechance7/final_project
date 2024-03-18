@@ -32,12 +32,12 @@ def crawl_image_store(url):
     #driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=chrome_options)
     #driver = webdriver.Chrome(service=Service(ChromeDriverManager(version="114.0.5735.90").install()),options=options)
     
-    #options = Options() 
-    #options.add_argument("--headless=new")
-    #options.add_argument('--disable-gpu')
+    options = Options() 
+    options.add_argument("--headless=new")
+    options.add_argument('--disable-gpu')
 
-    #driver = webdriver.Chrome(options=options)
-    driver = webdriver.Chrome()
+    driver = webdriver.Chrome(options=options)
+    #driver = webdriver.Chrome()
 
     # 웹페이지 로드
     driver.get(url)
