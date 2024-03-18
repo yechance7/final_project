@@ -1,6 +1,4 @@
-pandas
-streamlit
-selenium
-webdriver_manager
-chromium
-bs4 
+streamlit==1.17.0
+selenium==4.8.0
+webdriver-manager==3.8.5
+seleniumbase
