@@ -87,6 +87,7 @@ def crawl_image_item(url):
 def search_stores(data, user_input):
     matching_items = []
     for item in data:
+        content = item.get("content", "")
         if user_input in item["title"] or user_input in item["content"]:
             matching_items.append({"id": item["id"], "title": item["title"], "content": item["content"],"view_count": item["view_count"],"alias": item['alias']})
     return sorted(matching_items, key=lambda x: x['view_count'], reverse=True)
