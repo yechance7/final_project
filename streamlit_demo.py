@@ -87,7 +87,6 @@ def crawl_image_item(url):
 def search_stores(data, user_input):
     matching_items = []
     for item in data:
-        content = item.get("content", "")
         if user_input in item["title"] or user_input in item["content"]:
             matching_items.append({"id": item["id"], "title": item["title"], "content": item["content"],"view_count": item["view_count"],"alias": item['alias']})
     return sorted(matching_items, key=lambda x: x['view_count'], reverse=True)
@@ -120,7 +119,7 @@ def main(stores_data, item_data):
             if matching_stores:
                 st.write(f"스토어에서 찾은 아이템: {len(matching_stores)}")
                 for store in matching_stores:
-                    st.write(f"스토어 id: {store['id']}, title: {store['title']}, content: {store['content']}, alias: {item['alias']}")
+                    st.write(f"스토어 id: {store['id']}, title: {store['title']}, content: {store['content']}, alias: {store['alias']}")
                     url = f"https://ctee.kr/place/{store['alias']}"
                 
                     st.image(crawl_image_store(url), caption=f"스토어 id: {store['id']}, title: {store['title']}, content: {store['content']}", use_column_width=True)
