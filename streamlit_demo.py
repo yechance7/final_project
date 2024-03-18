@@ -48,9 +48,9 @@ def crawl_image_store(url):
     driver.get(url)
 
     # 이미지 태그 찾기
-    wait = WebDriverWait(driver, 10)  # 최대 10초까지 기다림
-    img_element = wait.until(EC.presence_of_element_located((By.CLASS_NAME, 'profile_img')))
-    #img_element = driver.find_element(By.CLASS_NAME, 'profile_img')
+    #wait = WebDriverWait(driver, 10)  # 최대 10초까지 기다림
+    #img_element = wait.until(EC.presence_of_element_located((By.CLASS_NAME, 'profile_img')))
+    img_element = driver.find_element(By.CLASS_NAME, 'profile_img')
 
     # 이미지 데이터 가져오기
     img_url = img_element.get_attribute('src')
