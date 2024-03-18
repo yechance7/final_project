@@ -24,14 +24,19 @@ def crawl_image_store(url):
     #chrome_options = Options()
     #chrome_options.add_argument("--headless")
 
-    options = webdriver.ChromeOptions()
-    options.add_argument('--headless')
-    options.add_argument('--window-size=1920x1080')
-    options.add_argument('--disable-gpu')
+    #options = webdriver.ChromeOptions()
+    #options.add_argument('--headless')
+    #options.add_argument('--window-size=1920x1080')
+    #options.add_argument('--disable-gpu')
 
     #driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=chrome_options)
-    driver = webdriver.Chrome(service=Service(ChromeDriverManager(version="114.0.5735.90").install()),options=options)
+    #driver = webdriver.Chrome(service=Service(ChromeDriverManager(version="114.0.5735.90").install()),options=options)
     
+    options = Options()
+    options.headless = True
+    options.add_experimental_option("detach", True)
+    driver = webdriver.Chrome(options=options,service=Service(ChromeDriverManager().install()))
+
     # 웹페이지 로드
     driver.get(url)
 
