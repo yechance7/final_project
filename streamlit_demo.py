@@ -44,35 +44,25 @@ def crawl_image_store(url):
     driver = webdriver.Chrome(options=options)
     #driver = webdriver.Chrome()
 
-    # 웹페이지 로드
-    driver.get(url)
+    with webdriver.Chrome(options=options) as driver:
+        driver.get(url)
+        
+        img_element = driver.find_element(By.CLASS_NAME, 'profile_img')
+        img_url = img_element.get_attribute('src')
 
-    # 이미지 태그 찾기
-    #wait = WebDriverWait(driver, 10)  # 최대 10초까지 기다림
-    #img_element = wait.until(EC.presence_of_element_located((By.CLASS_NAME, 'profile_img')))
-    img_element = driver.find_element(By.CLASS_NAME, 'profile_img')
+        response = requests.get(img_url)
+        img = Image.open(BytesIO(response.content))
 
-    # 이미지 데이터 가져오기
-    img_url = img_element.get_attribute('src')
-
-    # 이미지 다운로드 및 출력
-    response = requests.get(img_url)
-    img = Image.open(BytesIO(response.content))
-
-
-    # 브라우저 닫기
-    driver.quit()
-
-    return img
+    return img_url
 
 
 def crawl_image_item(url):
     
-    # Chrome 드라이버 서비스 생성
-    service = Service('chromedriver.exe')
+    options = Options() 
+    options.add_argument("--headless=new")
+    options.add_argument('--disable-gpu')
 
-    # Chrome 드라이버 초기화
-    driver = webdriver.Chrome(service=service)
+    driver = webdriver.Chrome(options=options)
 
     # 웹페이지 로드
     driver.get(url)
@@ -80,16 +70,12 @@ def crawl_image_item(url):
     # 이미지 태그 찾기
     img_element = driver.find_element(By.CLASS_NAME, 'item_img')
 
-    # 이미지 데이터 가져오기
-    img_data = img_element.screenshot_as_png
-
-    # 이미지 데이터를 PIL Image로 변환
-    image = Image.open(BytesIO(img_data))
+    img_url = img_element.get_attribute('src')
 
     # 브라우저 닫기
     driver.quit()
 
-    return image
+    return img_url
 
 
 
