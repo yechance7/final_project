@@ -55,7 +55,7 @@ def crawl_image_store(url):
     # 브라우저 닫기
     driver.quit()
 
-    return img
+    return img_url
 
 
 def crawl_image_item(url):
@@ -122,7 +122,7 @@ def main(stores_data, item_data):
                 st.write(f"스토어에서 찾은 아이템: {len(matching_stores)}")
                 for store in matching_stores:
                     st.write(f"스토어 id: {store['id']}, title: {store['title']}, content: {store['content']}, alias: {store['alias']}")
-                    url = f"https://ctee.kr/place/{store['alias']}"
+                    #url = f"https://ctee.kr/place/{store['alias']}"
                     url = "https://ctee.kr/place/Kimsagua"
                 
                     st.image(crawl_image_store(url), caption=f"스토어 id: {store['id']}, title: {store['title']}, content: {store['content']}", use_column_width=True)
