@@ -50,11 +50,11 @@ def crawl_image_store(url):
     #service = Service('chromedriver.exe')
     #service=Service(ChromeDriverManager(driver_version="122.0.6261.128").install())
 
-    chrome_options = Options()
-    chrome_options.add_argument("--headless")
+    #chrome_options = Options()
+    #chrome_options.add_argument("--headless")
 
     # Chrome 드라이버 초기화
-    driver = webdriver.Chrome(options=chrome_options)
+    driver = webdriver.Chrome(ChromeDriverManager().install())
     
     # 웹페이지 로드
     driver.get(url)
