@@ -4,4 +4,3 @@ selenium
 webdriver_manager
 chromium
 bs4 
-Pillow
