@@ -15,35 +15,6 @@ import requests
 from bs4 import BeautifulSoup
 from urllib.parse import urljoin
 
-def crawl_website(url):   
-    # Chrome 드라이버 서비스 생성
-    #service = Service('chromedriver.exe')
-    service=Service(ChromeDriverManager(driver_version="122.0.6261.129").install())
-    options= webdriver.ChromeOptions()
-
-    # Chrome 드라이버 초기화
-    #driver = webdriver.Chrome(service=service)
-    with webdriver.Chrome(service=service, options=options) as driver:
-        # 웹페이지 로드
-        driver.get(url)
-
-        # 이미지 태그 찾기
-        img_element = driver.find_element(By.TAG_NAME, 'img')
-
-        # 이미지 URL 가져오기
-        img_src = img_element.get_attribute('src')
-
-    return img_src
-
-def get_chromedriver_path() -> str:
-    return shutil.which('chromedriver')
-
-def get_webdriver_service() -> Service:
-    service = Service(
-        executable_path=get_chromedriver_path()
-    )
-    return service
-
 def crawl_image_store(url):
     
     # Chrome 드라이버 서비스 생성
