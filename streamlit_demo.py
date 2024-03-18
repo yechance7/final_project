@@ -58,7 +58,8 @@ def crawl_image_store(url):
     chrome_options.add_argument('--window-size=1920x1080')
     chrome_options.add_argument('--disable-gpu')
 
-    driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=chrome_options)
+    #driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=chrome_options)
+    driver = webdriver.Chrome(service=Service(ChromeDriverManager(version="114.0.5735.90").install()),options=options)
     
     # 웹페이지 로드
     driver.get(url)
