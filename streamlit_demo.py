@@ -15,6 +15,7 @@ import requests
 from bs4 import BeautifulSoup
 from urllib.parse import urljoin
 
+
 def crawl_image_store(url):
     
     # Chrome 드라이버 서비스 생성
