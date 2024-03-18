@@ -52,10 +52,11 @@ def crawl_image_store(url):
     response = requests.get(img_url)
     img = Image.open(BytesIO(response.content))
 
+
     # 브라우저 닫기
     driver.quit()
 
-    return img_url
+    return img
 
 
 def crawl_image_item(url):
