@@ -19,42 +19,7 @@ import requests
 from bs4 import BeautifulSoup
 from urllib.parse import urljoin
 
-
-def crawl_image_store(url):
-    
-    # Chrome 드라이버 서비스 생성
-    #service = Service('chromedriver.exe')
-    #service=Service(ChromeDriverManager(driver_version="122.0.6261.128").install())
-
-    #chrome_options = Options()
-    #chrome_options.add_argument("--headless")
-
-    #options = webdriver.ChromeOptions()
-    #options.add_argument('--headless')
-    #options.add_argument('--window-size=1920x1080')
-    #options.add_argument('--disable-gpu')
-
-    #driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=chrome_options)
-    #driver = webdriver.Chrome(service=Service(ChromeDriverManager(version="114.0.5735.90").install()),options=options)
-    
-    options = Options() 
-    options.add_argument("--headless=new")
-    options.add_argument('--disable-gpu')
-
-    driver = webdriver.Chrome(options=options)
-    #driver = webdriver.Chrome()
-
-    with webdriver.Chrome(options=options) as driver:
-        driver.get(url)
-        
-        img_element = driver.find_element(By.CLASS_NAME, 'profile_img')
-        img_url = img_element.get_attribute('src')
-
-        response = requests.get(img_url)
-        img = Image.open(BytesIO(response.content))
-
-    return img_url
-
+#streamlit run .\streamlit_demo.py
 
 def crawl_image_item(url):
     
@@ -64,20 +29,29 @@ def crawl_image_item(url):
 
     driver = webdriver.Chrome(options=options)
 
-    # 웹페이지 로드
-    driver.get(url)
-
-    # 이미지 태그 찾기
-    img_element = driver.find_element(By.CLASS_NAME, 'item_img')
-
-    img_url = img_element.get_attribute('src')
-
-    # 브라우저 닫기
-    driver.quit()
+    with webdriver.Chrome(options=options) as driver:
+        driver.get(url)
+        
+        img_element = driver.find_element(By.CLASS_NAME, 'item_img')
+        img_url = img_element.get_attribute('src')
 
     return img_url
 
+def crawl_image_store(url):
+    
+    options = Options() 
+    options.add_argument("--headless=new")
+    options.add_argument('--disable-gpu')
 
+    driver = webdriver.Chrome(options=options)
+
+    with webdriver.Chrome(options=options) as driver:
+        driver.get(url)
+        
+        img_element = driver.find_element(By.CLASS_NAME, 'profile_img')
+        img_url = img_element.get_attribute('src')
+
+    return img_url
 
 
 def search_stores(data, user_input):
@@ -117,34 +91,23 @@ def main(stores_data, item_data):
                 st.write(f"아이템에서 찾은 아이템 총 {len(matching_items)}:")
                 for item in matching_items:
                     url = f"https://ctee.kr/item/store/{item['id']}"
-                    #st.write(f"아이템 id: {item['id']}, simple_contents: {item['simple_contents']}, content: {item['content']}")
-                    st.image(crawl_image_item(url), caption=f"아이템 id: {item['id']}, simple_contents: {item['simple_contents']}, content: {item['content']}", use_column_width=True)
+                    st.write(f"아이템 id: {item['id']}, simple_contents: {item['simple_contents']}, content: {item['content']}")
+                    #st.image(crawl_image_item(url), caption=f"아이템 id: {item['id']}, simple_contents: {item['simple_contents']}, content: {item['content']}", width=200,use_column_width=False)
             else:
                 st.write("아이템 검색 결과가 없습니다.")
+
+            st.write("----------------------------------------------")
             matching_stores = search_stores(stores_data, user_input)
             if matching_stores:
                 st.write(f"스토어에서 찾은 아이템: {len(matching_stores)}")
                 for store in matching_stores:
-                    st.write(f"스토어 id: {store['id']}, title: {store['title']}, content: {store['content']}, alias: {store['alias']}")
-                    #url = f"https://ctee.kr/place/{store['alias']}"
-                    url = "https://ctee.kr/place/Kimsagua"
-                
-                    st.image(crawl_image_store(url), caption=f"스토어 id: {store['id']}, title: {store['title']}, content: {store['content']}", use_column_width=True)
+                    url = f"https://ctee.kr/place/{store['alias']}"
+                    st.write(f"스토어 id: {store['id']}, title: {store['title']}, content: {store['content']}")
+                    #st.image(crawl_image_store(url), caption=f"스토어 id: {store['id']}, title: {store['title']}, content: {store['content']}",width=200, use_column_width=False)
             else:
                 st.write("스토어 검색 결과가 없습니다.")
 
-            st.write("----------------------------------------------")
-
-            # 아이템 검색 및 결과 출력
-            matching_items = search_items(item_data, user_input)
-            if matching_items:
-                st.write(f"아이템에서 찾은 아이템 총 {len(matching_items)}:")
-                for item in matching_items:
-                    url = f"https://ctee.kr/item/store/{item['id']}"
-                    #st.write(f"아이템 id: {item['id']}, simple_contents: {item['simple_contents']}, content: {item['content']}")
-                    st.image(crawl_image_item(url), caption=f"아이템 id: {item['id']}, simple_contents: {item['simple_contents']}, content: {item['content']}", use_column_width=True)
-            else:
-                st.write("아이템 검색 결과가 없습니다.")
+            
 
 
 if __name__ == "__main__":
