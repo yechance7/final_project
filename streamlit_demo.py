@@ -55,21 +55,23 @@ def crawl_image_store(url):
 
 
 def search_stores(data, user_input):
-    matching_items = set()
+    matching_items = []
+    matching_id=set()
     for item in data:
-        if user_input in item["title"] or user_input in item["content"]:
-            matching_items.update({"id": item["id"], "title": item["title"], "content": item["content"],"view_count": item["view_count"],"alias": item['alias']})
-    matching_items=list(matching_items)
+        if (item["id"] not in matching_id) and (user_input in item["title"] or user_input in item["content"]):
+            matching_id.add(item["id"])
+            matching_items.append({"id": item["id"], "title": item["title"], "content": item["content"],"view_count": item["view_count"],"alias": item['alias']})
     return sorted(matching_items, key=lambda x: x['view_count'], reverse=True)
 
 def search_items(data, user_input):
-    matching_items = set()
+    matching_items = []
+    matching_id=set()
     for item in data:
         content = item.get("content", "")
         simple_contents = item.get("simple_contents", "")
-        if user_input in content or (simple_contents and user_input in simple_contents):
-            matching_items.update({"id": item["id"], "content": item["content"], "simple_contents": item["simple_contents"],"view_count": item["view_count"]})
-    matching_items=list(matching_items)
+        if (item["id"] not in matching_id) and (user_input in content or (simple_contents and user_input in simple_contents)) :
+            matching_id.add(item["id"])
+            matching_items.append({"id": item["id"], "content": item["content"], "simple_contents": item["simple_contents"],"view_count": item["view_count"]})
     return sorted(matching_items, key=lambda x: x['view_count'], reverse=True)
 
 
