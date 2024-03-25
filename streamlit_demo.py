@@ -6,6 +6,10 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.options import Options
 
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+
 #streamlit run .\streamlit_demo.py
 
 @st.cache
@@ -18,9 +22,9 @@ def crawl_image_item(url):
     driver = webdriver.Chrome(options=options)
 
     with webdriver.Chrome(options=options) as driver:
-        driver.get(url)
-        
-        img_element = driver.find_element(By.CLASS_NAME, 'item_img')
+        wait = WebDriverWait(driver, 20)
+        img_element = wait.until(EC.presence_of_element_located((By.XPATH, '//img[@class="item_img"]')))
+
         img_url = img_element.get_attribute('src')
 
     return img_url
