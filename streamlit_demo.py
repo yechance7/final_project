@@ -6,16 +6,6 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.options import Options
 
-from gensim.models import FastText
-
-def load_fasttext_model(model_path):
-    model = FastText.load_fasttext_format(model_path)
-    return model
-
-def get_embedding_vector(model, input_text):
-    embedding_vector = model.wv[input_text]
-    return embedding_vector
-
 
 #streamlit run .\streamlit_demo.py
 
