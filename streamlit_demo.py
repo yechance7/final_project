@@ -9,7 +9,7 @@ from selenium.webdriver.chrome.options import Options
 
 #streamlit run .\streamlit_demo.py
 
-@st.cache_data
+@st.cache
 def crawl_image_item(url):
     
     options = Options() 
@@ -26,7 +26,7 @@ def crawl_image_item(url):
 
     return img_url
 
-@st.cache_data
+@st.cache
 def crawl_image_store(url):
     
     options = Options() 
