@@ -20,15 +20,15 @@ code/**/run.log
 public_final_project
 final
 
-funnels.json
-readme_20240304.md.20240304
-orders_items.json
-orders_items.json
-user_subscribes.json
+data
+app
+model
 
 EDA.ipynb
 GPT.ipynb
 test.ipynb
 
 
-demo.py
+api.py
+db.py
+*pyc
